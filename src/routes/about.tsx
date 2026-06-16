@@ -25,9 +25,22 @@ function About() {
       </header>
 
       <section className="container-x mt-20 grid gap-16 md:grid-cols-12">
-        <div className="md:col-span-5">
-          <img src={portrait} alt="Antonis Loizou, FRICS" loading="lazy" width={1080} height={1440} className="aspect-[3/4] w-full object-cover" />
-          <div className="mt-4 eyebrow">Antonis Loizou, FRICS — Managing Director</div>
+        <div className="flex flex-col items-center md:items-start md:col-span-5">
+          {/* This wrapper keeps the image small on mobile, but scales to 100% on desktop */}
+          <div className="w-full max-w-[280px] md:max-w-full">
+            <img
+              src={portrait}
+              alt="Antonis Loizou, FRICS"
+              loading="lazy"
+              width={1080}
+              height={1440}
+              className="aspect-[3/4] w-full object-cover"
+            />
+          </div>
+          {/* Centers the label text on mobile to match the smaller centered picture */}
+          <div className="mt-4 eyebrow text-center md:text-left">
+            Antonis Loizou, FRICS — Managing Director
+          </div>
         </div>
         <div className="space-y-8 text-base leading-relaxed text-muted-foreground md:col-span-6 md:col-start-7">
           <p className="text-2xl font-display leading-snug text-primary">
