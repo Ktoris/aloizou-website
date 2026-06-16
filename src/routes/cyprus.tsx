@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import detail from "@/assets/cyprus-detail.jpg";
-import hero from "@/assets/hero-cyprus.jpg";
+import hero from "@/assets/cyprus_hero.webp";
 
 export const Route = createFileRoute("/cyprus")({
   head: () => ({
@@ -8,7 +7,6 @@ export const Route = createFileRoute("/cyprus")({
       { title: "About Cyprus — Antonis Loizou & Associates" },
       { name: "description", content: "Forty-five years of perspective on the Cyprus property market — written, taught and advised on by the firm." },
       { property: "og:title", content: "About Cyprus — Antonis Loizou & Associates" },
-      { property: "og:image", content: detail },
     ],
   }),
   component: Cyprus,
@@ -120,19 +118,7 @@ function Cyprus() {
         ))}
       </section>
 
-      <section className="relative mt-24 overflow-hidden bg-primary text-primary-foreground">
-        <img src={detail} alt="" aria-hidden loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25" />
-        <div className="container-x relative grid gap-10 py-24 md:grid-cols-2">
-          <h2 className="font-display text-4xl md:text-5xl">
-            Ask the firm a direct question about the Cyprus market.
-          </h2>
-          <div className="md:pt-4">
-            <Link to="/contact" className="inline-flex items-center gap-3 border border-[color:var(--gold)] px-6 py-3 text-sm uppercase tracking-[0.22em] text-[color:var(--gold)] transition hover:bg-[color:var(--gold)] hover:text-primary">
-              Submit an enquiry →
-            </Link>
-          </div>
-        </div>
-      </section>
+
     </>
   );
 }

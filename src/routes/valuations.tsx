@@ -220,9 +220,8 @@ function Valuations() {
           <section
             key={s.id}
             id={s.id}
-            className={`scroll-mt-28 grid gap-14 py-16 md:grid-cols-12 ${
-              i > 0 ? "border-t border-border" : ""
-            }`}
+            className={`scroll-mt-28 grid gap-14 py-16 md:grid-cols-12 ${i > 0 ? "border-t border-border" : ""
+              }`}
           >
             <div className="md:col-span-5">
               <div className="eyebrow">— {s.label}</div>

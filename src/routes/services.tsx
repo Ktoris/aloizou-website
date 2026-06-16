@@ -1,12 +1,20 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
       { title: "Services — Antonis Loizou & Associates" },
-      { name: "description", content: "Property evaluation, valuation, consultancy, building surveys, project management, property management, estate agency, development consulting, education and town planning across Cyprus." },
+      {
+        name: "description",
+        content:
+          "Property evaluation, valuation, consultancy, building surveys, project management, property management, estate agency, development consulting, education and town planning across Cyprus.",
+      },
       { property: "og:title", content: "Services — Antonis Loizou & Associates" },
-      { property: "og:description", content: "Our professional services include valuations, project management, town planning, property administration and estate agency." },
+      {
+        property: "og:description",
+        content:
+          "Our professional services include valuations, project management, town planning, property administration and estate agency.",
+      },
     ],
   }),
   component: Services,
@@ -98,58 +106,49 @@ const SERVICES = [
 function isBulletService(
   s: (typeof SERVICES)[number]
 ): s is (typeof SERVICES)[number] & { bullets: string[] } {
-  return typeof (s as any)?.bullets?.length === "number";
+  return Array.isArray((s as any)?.bullets) && (s as any).bullets.length > 0;
 }
 
 function Services() {
   return (
-    <>
-      <header className="container-x pt-24 md:pt-32">
-        <div className="eyebrow">— Practice Areas</div>
-        <h1 className="mt-6 max-w-4xl font-display text-5xl leading-[1.05] text-primary md:text-7xl">
+    <div className="min-h-screen bg-[#fcfbf8] text-[#1a1a1a]">
+      <section className="mx-auto max-w-7xl px-6 pt-20 pb-10">
+        <p className="text-xs uppercase tracking-widest text-[#8a7e5e]">— Practice Areas</p>
+        <h1 className="mt-4 font-serif text-4xl md:text-5xl text-[#2a3a2a]">
           Our professional services include
         </h1>
-        <p className="mt-8 max-w-2xl text-lg text-muted-foreground">
-          Each service has been refined across four decades of advising Cyprus' owners, investors and
-          institutions. They stand on their own — and combine readily into one engagement.
+        <p className="mt-4 max-w-2xl text-sm text-[#6b6b6b]">
+          Each service has been refined across four decades of advising Cyprus' owners, investors
+          and institutions. They stand on their own — and combine readily into one engagement.
         </p>
-      </header>
-
-      <section className="container-x mt-20 space-y-px border-y border-border bg-border">
-        {SERVICES.map((s) => (
-          <article key={s.n} className="grid bg-background transition-colors hover:bg-secondary md:grid-cols-12">
-            <div className="px-6 pt-10 md:col-span-2 md:px-10 md:py-12">
-              <span className="font-display text-3xl text-[color:var(--gold-deep)]">{s.n}</span>
-            </div>
-            <div className="px-6 pb-10 md:col-span-7 md:px-2 md:py-12">
-              <h2 className="font-display text-3xl text-primary md:text-4xl">{s.t}</h2>
-              <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">{s.d}</p>
-              {isBulletService(s) ? (
-                <ul className="mt-5 list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
-                  {s.bullets.map((b) => <li key={b}>{b}</li>)}
-                </ul>
-              ) : null}
-            </div>
-            <div className="px-6 pb-10 md:col-span-3 md:px-10 md:py-12 md:text-right">
-              <Link to="/contact" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-primary hover:text-[color:var(--gold-deep)]">
-                Enquire →
-              </Link>
-            </div>
-          </article>
-        ))}
       </section>
 
-      <section className="container-x mt-24">
-        <div className="border border-border bg-secondary p-10 md:p-16">
-          <div className="eyebrow">— Engagement</div>
-          <h2 className="mt-6 max-w-3xl font-display text-3xl text-primary md:text-4xl">
-            Not sure which service fits the brief? We routinely scope a combined engagement.
-          </h2>
-          <Link to="/contact" className="mt-8 inline-flex items-center gap-3 bg-primary px-6 py-3 text-sm uppercase tracking-[0.22em] text-primary-foreground hover:bg-[color:var(--gold-deep)]">
-            Start a conversation →
-          </Link>
+      <section className="mx-auto max-w-7xl px-6 pb-20">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {SERVICES.map((s) => (
+            <article
+              key={s.n}
+              className="grid grid-cols-[auto_minmax(0,1fr)] gap-6 rounded-sm border border-[#e7e2d3] bg-white p-6 md:p-8"
+            >
+              <div className="shrink-0 text-sm tabular-nums text-[#8a7e5e]">{s.n}</div>
+              <div className="min-w-0">
+                <h2 className="font-serif text-xl text-[#2a3a2a] md:text-2xl">{s.t}</h2>
+                <p className="mt-3 text-sm leading-relaxed text-[#5b5b5b]">{s.d}</p>
+                {isBulletService(s) ? (
+                  <ul className="mt-4 space-y-2 text-sm text-[#5b5b5b]">
+                    {s.bullets.map((b) => (
+                      <li key={b} className="flex gap-2">
+                        <span className="mt-2 inline-block h-1 w-1 shrink-0 rounded-full bg-[#8a7e5e]" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
+              </div>
+            </article>
+          ))}
         </div>
       </section>
-    </>
+    </div>
   );
 }

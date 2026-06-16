@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import portrait from "@/assets/about-portrait.jpg";
+import portrait from "@/assets/antonisloizou.png";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -43,6 +43,9 @@ function About() {
           <p>
             The firm holds Fellowship of the Royal Institution of Chartered Surveyors and is a
             registered firm with ETEK, the Cyprus Scientific and Technical Chamber.
+          </p>
+          <p>
+            Publishing more than 150 articles in the local in the local press, in both Greek and English, along with corresponding intitutions such as the EU and the World Bank yearly.
           </p>
           <div className="border border-border bg-secondary p-8 md:p-10">
             <div className="eyebrow">— About us</div>

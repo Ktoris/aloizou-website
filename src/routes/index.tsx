@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import hero from "@/assets/hero-resort.png";
 import portrait from "@/assets/about-portrait.jpg";
-import detail from "@/assets/cyprus-detail.jpg";
+import detail from "@/assets/cyprus_hero.webp";
 import antonisloizou from "@/assets/antonisloizou.png";
 
 export const Route = createFileRoute("/")({
@@ -58,8 +58,8 @@ function Index() {
                 <span className="h-px w-10 bg-[color:var(--gold)]" />
                 <span className="eyebrow !text-[color:var(--gold)]">Est. 1980 · Nicosia</span>
               </div>
-              <h1 className="mt-6 font-display text-4xl leading-[1.1] md:text-6xl lg:text-7xl">
-                From concept to completion — delivering Cyprus's project developments for over 40 years.
+              <h1 className="mt-6 font-display text-5xl leading-[1.05] md:text-7xl lg:text-8xl">
+                Where quality of service counts, we are streets ahead.
               </h1>
               <p className="mt-8 inline-flex items-center gap-3 text-sm uppercase tracking-[0.22em] text-[color:var(--gold)] transition group-hover:gap-4">
                 View project development portfolio
