@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
-import hero from "@/assets/hero-resort.png";
 import portrait from "@/assets/about-portrait.jpg";
 import detail from "@/assets/cyprus_hero.webp";
 import antonisloizou from "@/assets/antonisloizou.png";
@@ -17,8 +16,8 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:title", content: "Antonis Loizou & Associates — Chartered Surveyors" },
       { property: "og:description", content: "Where quality of services counts, we are streets ahead." },
-      { property: "og:image", content: hero },
-      { property: "twitter:image", content: hero },
+      { property: "og:image", content: detail },
+      { property: "twitter:image", content: detail },
     ],
     links: [{ rel: "canonical", href: "/" }],
   }),
