@@ -1,4 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useEffect, useRef } from "react";
 import hero from "@/assets/hero-resort.png";
 import portrait from "@/assets/about-portrait.jpg";
 import detail from "@/assets/cyprus_hero.webp";
@@ -23,6 +25,8 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 const SERVICES = [
   { n: "01", t: "Valuations", d: "Independent valuations of every property type and interest, prepared to RICS Red Book standards." },
   { n: "02", t: "Project Management", d: "End-to-end direction of development from feasibility through delivery and handover." },
@@ -32,60 +36,200 @@ const SERVICES = [
   { n: "06", t: "Building Surveys", d: "Technical condition reports and dilapidations for buyers, lenders and trustees." },
 ];
 
+function MagneticChar({ char, index }: { char: string; index: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 80, damping: 28, mass: 0.8 });
+  const sy = useSpring(y, { stiffness: 80, damping: 28, mass: 0.8 });
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      const el = ref.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+      const radius = 220;
+
+      if (dist < radius && dist > 0) {
+        const t = 1 - dist / radius;
+        const f = t * t * 5;
+        x.set((dx / dist) * f);
+        y.set((dy / dist) * f);
+      } else {
+        x.set(0);
+        y.set(0);
+      }
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [x, y]);
+
+  return (
+    <motion.span
+      ref={ref}
+      style={{ x: sx, y: sy, display: "inline-block", willChange: "transform" }}
+      initial={{ y: 60, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 1.1, delay: 0.25 + index * 0.02, ease: EASE }}
+    >
+      {char === " " ? "\u00A0" : char}
+    </motion.span>
+  );
+}
+
+function HeadlineLine({ text, delay = 0 }: { text: string; delay?: number }) {
+  return (
+    <span className="block overflow-hidden pb-[0.05em]">
+      <motion.span
+        className="block w-full"
+        initial={{ y: "110%" }}
+        animate={{ y: "0%" }}
+        transition={{ duration: 1.1, delay, ease: EASE }}
+      >
+        {text.split("").map((c, i) => (
+          <MagneticChar key={i} char={c} index={i} />
+        ))}
+      </motion.span>
+    </span>
+  );
+}
+
+function Rule({ delay = 0 }: { delay?: number }) {
+  return (
+    <motion.div
+      className="h-px w-full origin-left"
+      style={{ backgroundColor: "var(--border)" }}
+      initial={{ scaleX: 0 }}
+      animate={{ scaleX: 1 }}
+      transition={{ duration: 1.2, delay, ease: EASE }}
+    />
+  );
+}
+
+function FadeUp({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  return (
+    <motion.div
+      className={className}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.9, delay, ease: EASE }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 function Index() {
+  const mx = useMotionValue(0.5);
+  const my = useMotionValue(0.5);
+  const tx = useTransform(mx, [0, 1], [-8, 8]);
+  const ty = useTransform(my, [0, 1], [-8, 8]);
+  const sx = useSpring(tx, { stiffness: 60, damping: 20 });
+  const sy = useSpring(ty, { stiffness: 60, damping: 20 });
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      mx.set(e.clientX / window.innerWidth);
+      my.set(e.clientY / window.innerHeight);
+    };
+    window.addEventListener("mousemove", onMove);
+    return () => window.removeEventListener("mousemove", onMove);
+  }, [mx, my]);
+
   return (
     <>
-      <section className="relative isolate overflow-hidden">
-        <Link
-          to="/management"
-          hash="project-development"
-          hashScrollIntoView={{ behavior: "smooth" }}
-          className="group relative block cursor-pointer"
+      {/* Slogan Hero Section Layout */}
+      <section className="relative overflow-hidden bg-background px-8 pt-24 pb-4">
+        <motion.div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{ x: sx, y: sy }}
         >
-          <div className="absolute inset-0 -z-10">
-            <img
-              src={hero}
-              alt="Mediterranean resort development in Cyprus"
-              width={1920}
-              height={1080}
-              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-primary/75 via-primary/50 to-primary/80 transition-colors duration-300 group-hover:from-primary/80 group-hover:via-primary/55 group-hover:to-primary/85" />
-          </div>
-          <div className="container-x relative pt-28 pb-40 md:pt-40 md:pb-56">
-            <div className="max-w-3xl text-primary-foreground">
-              <div className="flex items-center gap-3 text-[color:var(--gold)]">
-                <span className="h-px w-10 bg-[color:var(--gold)]" />
-                <span className="eyebrow !text-[color:var(--gold)]">Est. 1980 · Nicosia</span>
-              </div>
-              <h1 className="mt-6 font-display text-5xl leading-[1.05] md:text-7xl lg:text-8xl">
-                Where quality of service counts, we are streets ahead.
-              </h1>
-              <p className="mt-8 inline-flex items-center gap-3 text-sm uppercase tracking-[0.22em] text-[color:var(--gold)] transition group-hover:gap-4">
-                View project development portfolio
-                <span aria-hidden>→</span>
-              </p>
+          <div className="absolute inset-x-8 top-0 h-full opacity-[0.07]">
+            <div className="grid h-full grid-cols-12 gap-6">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="border-l" style={{ borderColor: "var(--primary)" }} />
+              ))}
             </div>
           </div>
-        </Link>
-        <div className="container-x relative -mt-20 md:-mt-28">
-          <dl className="grid grid-cols-2 divide-y divide-border bg-background shadow-2xl shadow-primary/20 md:grid-cols-4 md:divide-x md:divide-y-0">
-            {[
-              ["42+", "Years in the market"],
-              ["150+", "Articles (Greek & English)"],
-              ["№ 1", "Estate Agent, Cyprus"],
-              ["FRICS", "Chartered Standing"],
-            ].map(([k, v]) => (
-              <div key={v} className="px-6 py-8 md:px-10 md:py-10">
-                <div className="font-display text-4xl text-primary md:text-5xl">{k}</div>
-                <div className="eyebrow mt-3">{v}</div>
-              </div>
-            ))}
-          </dl>
+        </motion.div>
+
+        <div className="mx-auto relative grid max-w-[1400px] grid-cols-12 gap-6">
+          <div className="col-span-12 mb-12 flex items-center justify-center md:justify-start gap-4 md:col-span-8">
+            <motion.span
+              className="block h-px w-12 origin-center md:origin-left"
+              style={{ backgroundColor: "var(--gold)" }}
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.9, delay: 0.1, ease: EASE }}
+            />
+            <FadeUp delay={0.2}>
+              <span className="text-[11px] tracking-[0.32em] uppercase text-[color:var(--gold)]">
+                Est. 1980 · Nicosia
+              </span>
+            </FadeUp>
+          </div>
+
+          <h1
+            className="col-span-12 font-display font-medium tracking-[-0.035em] text-[clamp(3.2rem,8.5vw,9rem)] leading-[0.90] text-center md:text-left"
+            style={{ color: "var(--primary)" }}
+          >
+            <HeadlineLine text="Where quality" delay={0.15} />
+            <HeadlineLine text="of service counts," delay={0.25} />
+            <span className="block italic" style={{ color: "var(--gold)" }}>
+              <HeadlineLine text="we are streets ahead." delay={0.35} />
+            </span>
+          </h1>
         </div>
       </section>
 
-      <section className="container-x mt-32 grid gap-16 md:grid-cols-12">
+      {/* Animated Metrics Bento Grid Layout */}
+      <section className="mx-auto max-w-[1400px] px-8 py-16">
+        <Rule delay={0.5} />
+        <div className="grid grid-cols-2 md:grid-cols-4">
+          {[
+            { n: "42+", l: "Years in the market", k: "01" },
+            { n: "150+", l: "Articles (Greek & English)", k: "02" },
+            { n: "№ 1", l: "Estate Agent, Cyprus", k: "03" },
+            { n: "FRICS", l: "Chartered Standing", k: "04" },
+          ].map((s, i) => (
+            <motion.div
+              key={s.l}
+              initial={{ y: 24, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.9, delay: 0.6 + i * 0.08, ease: EASE }}
+              className="group relative flex flex-col items-center text-center px-4 py-8 md:items-start md:text-left md:px-8 first:md:pl-0 last:md:pr-0 border-b border-r md:border-b-0 md:last:border-r-0 border-border"
+            >
+              <div className="mb-6 text-[10px] tracking-[0.3em] uppercase text-[color:var(--gold)]">
+                {s.k}
+              </div>
+              <div className="font-display text-4xl tracking-tight transition-[font-style] duration-500 group-hover:italic text-primary sm:text-5xl md:text-7xl">
+                {s.n}
+              </div>
+              <div className="mt-4 text-[11px] tracking-[0.22em] uppercase opacity-60">
+                {s.l}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <Rule delay={0.8} />
+      </section>
+
+      {/* The Firm Editorial Info Section */}
+      <section className="container-x mt-12 grid gap-16 md:grid-cols-12">
         <div className="md:col-span-5">
           <div className="eyebrow">— The Firm</div>
           <h2 className="mt-5 font-display text-4xl leading-tight text-primary md:text-5xl">
@@ -131,7 +275,7 @@ function Index() {
         </div>
       </section>
 
-      {/* QUICK FACTS (from legacy copy) */}
+      {/* QUICK FACTS */}
       <section className="container-x mt-28">
         <div className="border border-border bg-secondary p-10 md:p-16">
           <div className="eyebrow">— At a glance</div>
@@ -147,7 +291,7 @@ function Index() {
             <li>Estate agency, promotion and building surveys.</li>
             <li>
               Education / information service through publication of articles in the local press (Greek
-              & English) and correspondence with institutions such as the EU and the World Bank.
+              &amp; English) and correspondence with institutions such as the EU and the World Bank.
             </li>
           </ul>
         </div>
@@ -209,7 +353,7 @@ function Index() {
       <section className="container-x mt-28">
         <div className="flex items-end justify-between border-b border-border pb-8">
           <div>
-            <div className="eyebrow">— Questions & Answers</div>
+            <div className="eyebrow">— Questions &amp; Answers</div>
             <h2 className="mt-4 font-display text-4xl text-primary md:text-5xl">Straight answers, in context.</h2>
           </div>
           <Link to="/contact" className="hidden text-sm uppercase tracking-[0.22em] text-primary hover:text-[color:var(--gold-deep)] md:inline">
