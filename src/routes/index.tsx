@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useRef } from "react";
-import portrait from "@/assets/about-portrait.jpg";
+import portrait from "@/assets/about-portrait.webp";
 import detail from "@/assets/cyprus_hero.webp";
 import antonisloizou from "@/assets/antonisloizou.png";
 
@@ -306,8 +306,7 @@ function Index() {
         <div className="md:col-span-6 md:col-start-7 md:pt-16">
           <div className="eyebrow">— Managing Director</div>
           <blockquote className="mt-6 font-display text-3xl leading-snug text-primary md:text-4xl">
-            "Forty-five years on, the work is still the same: tell the client the truth about the
-            building, the market and the planning — clearly, on the record, and on time."
+            "Any business plan relies on projections based on reasonable assumptions and data."
           </blockquote>
           <div className="mt-8 flex items-center gap-4">
             <span className="h-px w-10 bg-[color:var(--gold)]" />
