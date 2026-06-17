@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import { useState, useEffect, useCallback } from "react";
-import logo from "@/assets/aloiozu&associates_chartered_surveyors.webp";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -157,17 +156,18 @@ function SiteHeader() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
 
+  // Close drawer on route change
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
+  // Lock body scroll when drawer is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
-
     return () => {
       document.body.style.overflow = "";
     };
@@ -178,26 +178,15 @@ function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur">
-        <div className="container-x flex h-16 items-center gap-8 lg:h-20">
-
-          {/* Logo */}
-          <Link
-            to="/"
-            onClick={close}
-            className="w-full h-auto object-contain"
-          >
-            <img
-              src={logo}
-              alt="Antonis Loizou & Associates"
-              className="h-12 lg:h-16 w-auto max-w-[280px] object-cover object-top"
-            />
+        {/* CHANGED: Swapped md:h-20 out for xl:h-20 */}
+        <div className="container-x flex h-16 items-center justify-between lg:h-20">
+          <Link to="/" className="flex flex-col leading-none" onClick={close}>
+            <span className="font-display text-xl text-primary">Antonis Loizou</span>
+            <span className="eyebrow mt-1">& Associates · FRICS</span>
           </Link>
 
-          {/* Desktop navigation */}
-          <nav
-            className="hidden gap-9 lg:flex ml-auto"
-            aria-label="Primary navigation"
-          >
+          {/* CHANGED: Desktop navigation is now hidden untl 'xl' screens */}
+          <nav className="hidden gap-9 lg:flex" aria-label="Primary navigation">
             {NAV.map((n) => (
               <Link
                 key={n.to}
@@ -211,10 +200,10 @@ function SiteHeader() {
             ))}
           </nav>
 
-          {/* Hamburger */}
+          {/* CHANGED: Hamburger button stays active all the way up until 'xl' screens */}
           <button
             id="mobile-menu-toggle"
-            className="block lg:hidden p-2 text-primary ml-auto"
+            className="block lg:hidden p-2 text-primary"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-drawer"
@@ -225,34 +214,27 @@ function SiteHeader() {
         </div>
       </header>
 
+      {/* Backdrop */}
       <div
         className="mobile-drawer-backdrop"
-        style={{
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? "auto" : "none",
-        }}
+        style={{ opacity: open ? 1 : 0, pointerEvents: open ? "auto" : "none" }}
         onClick={close}
         aria-hidden
       />
 
+      {/* Mobile drawer */}
       <nav
         id="mobile-drawer"
         className="mobile-drawer"
-        style={{
-          transform: open ? "translateX(0)" : "translateX(100%)",
-        }}
+        style={{ transform: open ? "translateX(0)" : "translateX(100%)" }}
         aria-label="Mobile navigation"
         aria-hidden={!open}
       >
         <div className="mobile-drawer-header">
-          <div className="flex items-center">
-            <img
-              src={logo}
-              alt="Antonis Loizou & Associates"
-              className="h-12 lg:h-16 w-auto object-contain object-top"
-            />
+          <div className="flex flex-col leading-none">
+            <span className="font-display text-lg text-primary">Antonis Loizou</span>
+            <span className="eyebrow mt-1">& Associates · FRICS</span>
           </div>
-
           <button
             className="mobile-drawer-close"
             onClick={close}
@@ -261,7 +243,6 @@ function SiteHeader() {
             ✕
           </button>
         </div>
-
         <ul className="mobile-drawer-links">
           {NAV.map((n) => (
             <li key={n.to}>
@@ -277,17 +258,10 @@ function SiteHeader() {
             </li>
           ))}
         </ul>
-
         <div className="mobile-drawer-footer">
-          <div className="eyebrow text-[color:var(--gold)]">
-            Contact
-          </div>
-          <p className="mt-2 text-sm text-muted-foreground">
-            +357 22 433 333
-          </p>
-          <p className="text-sm text-muted-foreground">
-            info@aloizou.com.cy
-          </p>
+          <div className="eyebrow text-[color:var(--gold)]">Contact</div>
+          <p className="mt-2 text-sm text-muted-foreground">+357 22 433 333</p>
+          <p className="text-sm text-muted-foreground">info@aloizou.com.cy</p>
         </div>
       </nav>
     </>
