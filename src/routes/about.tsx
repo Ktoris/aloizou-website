@@ -26,7 +26,7 @@ function About() {
 
       <section className="container-x mt-20 grid gap-16 md:grid-cols-12">
         <div className="flex flex-col items-center md:items-start md:col-span-5">
-          {/* This wrapper keeps the image small on mobile, but scales to 100% on desktop */}
+          {/* Removed overflow-hidden to allow zoom-expand */}
           <div className="w-full max-w-[280px] md:max-w-full">
             <img
               src={portrait}
@@ -34,10 +34,10 @@ function About() {
               loading="lazy"
               width={1080}
               height={1440}
-              className="aspect-[3/4] w-full object-cover"
+              /* Added zoom-expand and rounded-md */
+              className="aspect-[3/4] w-full object-cover rounded-md zoom-expand"
             />
           </div>
-          {/* Centers the label text on mobile to match the smaller centered picture */}
           <div className="mt-4 eyebrow text-center md:text-left">
             Antonis Loizou, FRICS — Managing Director
           </div>
@@ -71,7 +71,7 @@ function About() {
           </div>
           <dl className="grid grid-cols-2 gap-px border border-border bg-border">
             {[["1980", "Founded"], ["FRICS", "Chartered"], ["ETEK", "Registered Firm"], ["№ 567", "Reg. Estate Agent"]].map(([k, v]) => (
-              <div key={v} className="bg-background p-6">
+              <div key={v} className="group bg-background p-6 transition-colors hover:bg-secondary/40">
                 <div className="font-display text-2xl text-primary">{k}</div>
                 <div className="eyebrow mt-2">{v}</div>
               </div>

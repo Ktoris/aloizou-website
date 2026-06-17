@@ -369,3 +369,15 @@ body {
     padding-inline: 2rem;
   }
 }
+
+.zoom-expand {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  position: relative;
+  z-index: 10;
+}
+
+.zoom-expand:hover {
+  transform: scale(1.05);
+  /* Adjust 1.15 to your preference */
+}

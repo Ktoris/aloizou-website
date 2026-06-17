@@ -252,11 +252,12 @@ function Index() {
         </div>
       </section>
 
+      {/* Practice Areas */}
       <section className="container-x mt-32">
         <div className="flex items-end justify-between border-b border-border pb-8">
           <div>
             <div className="eyebrow">— Practice Areas</div>
-            <h2 className="mt-4 font-display text-4xl text-primary md:text-5xl">Six disciplines, one practice.</h2>
+            <h2 className="mt-4 font-display text-4xl text-primary md:text-5xl">Our Practice Areas</h2>
           </div>
           <Link to="/services" className="hidden text-sm uppercase tracking-[0.22em] text-primary hover:text-[color:var(--gold-deep)] md:inline">All Services →</Link>
         </div>
@@ -296,13 +297,23 @@ function Index() {
         </div>
       </section>
 
+      {/* Updated Portrait Section with zoom-expand and removed overflow-hidden containers */}
       <section className="container-x mt-32 grid gap-12 md:grid-cols-12 md:gap-16">
         <div className="md:col-span-5">
-          <div className="relative aspect-[3/4] overflow-hidden">
-            <img src={portrait} alt="Antonis Loizou at the drafting desk" loading="lazy" width={1080} height={1440} className="h-full w-full object-cover" />
+          {/* Removed overflow-hidden to allow zoom-expand to grow */}
+          <div className="relative aspect-[3/4] rounded-md">
+            <img
+              src={portrait}
+              alt="Antonis Loizou at the drafting desk"
+              loading="lazy"
+              width={1080}
+              height={1440}
+              className="h-full w-full object-cover rounded-md zoom-expand"
+            />
             <div className="absolute -bottom-4 -right-4 h-32 w-32 border border-[color:var(--gold)]" aria-hidden />
           </div>
         </div>
+
         <div className="md:col-span-6 md:col-start-7 md:pt-16">
           <div className="eyebrow">— Managing Director</div>
           <blockquote className="mt-6 font-display text-3xl leading-snug text-primary md:text-4xl">
@@ -313,19 +324,24 @@ function Index() {
             <div>
               <div className="font-display text-lg text-primary">Antonis Loizou, FRICS</div>
               <div className="eyebrow">Managing Director</div>
-              <img
-                src={antonisloizou}
-                alt="Antonis Loizou, FRICS"
-                loading="lazy"
-                width={420}
-                height={420}
-                className="mt-4 h-52 w-52 rounded-md object-cover"
-              />
+
+              {/* Removed overflow-hidden, applied zoom-expand layout */}
+              <div className="mt-4 h-52 w-52 rounded-md">
+                <img
+                  src={antonisloizou}
+                  alt="Antonis Loizou, FRICS"
+                  loading="lazy"
+                  width={420}
+                  height={420}
+                  className="h-full w-full object-cover rounded-md zoom-expand"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Cyprus Market Section (EXCLUDED EFFECT AS REQUESTED) */}
       <section className="relative mt-32 overflow-hidden bg-primary text-primary-foreground">
         <img src={detail} alt="" aria-hidden loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25" />
         <div className="container-x relative grid gap-12 py-24 md:grid-cols-2 md:py-32">
@@ -373,7 +389,7 @@ function Index() {
               a: "Services are available separately or in combination, tailored to precisely suit the client's particular needs.",
             },
           ].map((i) => (
-            <div key={i.q} className="bg-background p-10">
+            <div key={i.q} className="group bg-background p-10 transition-colors hover:bg-secondary">
               <div className="font-display text-2xl text-primary">{i.q}</div>
               <div className="mt-3 h-px w-10 bg-[color:var(--gold)]" />
               <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{i.a}</p>

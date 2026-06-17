@@ -24,7 +24,17 @@ function Cyprus() {
 
       <section className="container-x mt-16 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-7">
-          <img src={hero} alt="Cyprus coastline" loading="lazy" width={1920} height={1080} className="aspect-[4/3] w-full object-cover" />
+          {/* Apply the zoom-expand effect to the hero image, ensuring its wrapper allows it to expand */}
+          <div className="relative aspect-[4/3] w-full">
+            <img
+              src={hero}
+              alt="Cyprus coastline"
+              loading="lazy"
+              width={1920}
+              height={1080}
+              className="absolute inset-0 w-full h-full object-cover zoom-expand rounded-md"
+            />
+          </div>
         </div>
         <div className="space-y-6 text-base leading-relaxed text-muted-foreground md:col-span-5 md:pt-4">
           <p className="text-xl font-display leading-snug text-primary">
@@ -110,7 +120,7 @@ function Cyprus() {
           ["Limassol", "Coastal hub for high-value residential and hospitality."],
           ["Paphos & Larnaca", "Resort, retirement and emerging investment markets."],
         ].map(([k, v]) => (
-          <div key={k} className="bg-background p-10">
+          <div key={k} className="group bg-background p-10 transition-colors hover:bg-secondary">
             <div className="font-display text-2xl text-primary">{k}</div>
             <div className="mt-3 h-px w-10 bg-[color:var(--gold)]" />
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{v}</p>
