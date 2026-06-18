@@ -64,7 +64,7 @@ function Cyprus() {
             <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
               Cyprus is situated in the north eastern basin of the Mediterranean Sea at the crossroads
               of Europe, Asia and Africa. With an area of 9,251 km², it is one of the largest islands
-              in the Mediterranean. The population (2010 estimate) was 850,000.
+              in the Mediterranean. The population is approximately 1,3 million.
             </p>
             <ul className="mt-5 space-y-2 text-sm leading-relaxed text-muted-foreground">
               <li>Nicosia — 313,000 (Capital)</li>
