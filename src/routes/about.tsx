@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import portrait from "@/assets/antonisloizou.png";
+import certificate from "@/assets/rics_company_firm.webp";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -25,8 +26,10 @@ function About() {
       </header>
 
       <section className="container-x mt-20 grid gap-16 md:grid-cols-12">
-        <div className="flex flex-col items-center md:items-start md:col-span-5">
-          {/* Removed overflow-hidden to allow zoom-expand */}
+        {/* Left Column: Portrait & Certificate Stack */}
+        <div className="flex flex-col items-center md:items-start md:col-span-5 space-y-24">
+
+          {/* Portrait Asset */}
           <div className="w-full max-w-[280px] md:max-w-full">
             <img
               src={portrait}
@@ -34,14 +37,28 @@ function About() {
               loading="lazy"
               width={1080}
               height={1440}
-              /* Added zoom-expand and rounded-md */
               className="aspect-[3/4] w-full object-cover rounded-md zoom-expand"
             />
+            <div className="mt-4 eyebrow text-center md:text-left">
+              Antonis Loizou, FRICS — Managing Director
+            </div>
           </div>
-          <div className="mt-4 eyebrow text-center md:text-left">
-            Antonis Loizou, FRICS — Managing Director
+
+          {/* Certificate Asset */}
+          <div className="w-full max-w-[280px] md:max-w-full">
+            <img
+              src={certificate}
+              alt="RICS Regulated Firm Certificate"
+              loading="lazy"
+              width={800}
+              height={600}
+              className="w-full rounded-md zoom-expand"
+            />
           </div>
+
         </div>
+
+        {/* Right Column: Copywriting & Stats */}
         <div className="space-y-8 text-base leading-relaxed text-muted-foreground md:col-span-6 md:col-start-7">
           <p className="text-2xl font-display leading-snug text-primary">
             Antonis Loizou &amp; Associates E.P.E. was set up in 1980 and has, over four decades,
@@ -58,7 +75,7 @@ function About() {
             registered firm with ETEK, the Cyprus Scientific and Technical Chamber.
           </p>
           <p>
-            Publishing more than 150 articles in the local in the local press, in both Greek and English, along with corresponding intitutions such as the EU and the World Bank yearly.
+            Publish more than 150 articles in the local press, in both Greek and English, along with corresponding institutions such as the EU and the World Bank yearly.
           </p>
           <div className="border border-border bg-secondary p-8 md:p-10">
             <div className="eyebrow">— About us</div>
@@ -82,7 +99,6 @@ function About() {
           </Link>
         </div>
       </section>
-
     </>
   );
 }
